@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../data/models/car_model.dart';
 import '../../data/providers/car_provider.dart';
+import 'car_booking_screen.dart';
 
 class CarDetailScreen extends StatelessWidget {
   final String carId;
@@ -109,6 +110,38 @@ class CarDetailScreen extends StatelessWidget {
                               );
                             }).toList(),
                       ),
+                      const SizedBox(height: 24),
+                      if (car.isAvailable)
+                        SizedBox(
+                          width: double.infinity,
+                          child: FilledButton(
+                            onPressed: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder:
+                                      (context) =>
+                                          CarBookingScreen(carId: car.id),
+                                ),
+                              );
+                            },
+                            child: const Text('Book Now'),
+                          ),
+                        )
+                      else
+                        Container(
+                          width: double.infinity,
+                          padding: const EdgeInsets.all(16),
+                          decoration: BoxDecoration(
+                            color: Colors.red[100],
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                          child: Text(
+                            'Currently Not Available',
+                            style: TextStyle(color: Colors.red[900]),
+                            textAlign: TextAlign.center,
+                          ),
+                        ),
                     ],
                   ),
                 ),

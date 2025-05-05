@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'firebase_options.dart';
 import 'package:provider/provider.dart';
+import 'package:logging/logging.dart';
 import 'features/auth/data/providers/auth_provider.dart';
 import 'features/car/data/providers/car_provider.dart';
 import 'features/auth/presentation/screens/login_screen.dart';
@@ -10,7 +12,27 @@ import 'features/car/presentation/screens/car_listing_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp();
+
+  // Initialize logging configuration
+  Logger.root.level = Level.ALL;
+  Logger.root.onRecord.listen((record) {
+    debugPrint('${record.level.name}: ${record.time}: ${record.message}');
+    if (record.error != null) {
+      debugPrint('Error: ${record.error}');
+      if (record.stackTrace != null) {
+        debugPrint('Stack trace:\n${record.stackTrace}');
+      }
+    }
+  });
+
+  try {
+    await Firebase.initializeApp(
+      options: DefaultFirebaseOptions.currentPlatform,
+    );
+  } catch (e) {
+    debugPrint('Failed to initialize Firebase: $e');
+    return;
+  }
   runApp(const LuxuryCarRentalApp());
 }
 

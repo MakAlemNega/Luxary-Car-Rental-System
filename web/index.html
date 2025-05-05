@@ -38,23 +38,19 @@
     <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js"></script>
 
-    <script>
-      window.addEventListener("load", function (ev) {
-        // Initialize Firebase before loading Flutter
-        var firebaseConfig = {
-          // Your web app's Firebase configuration will go here
-          // Get this from Firebase Console -> Project Settings -> General -> Your Apps -> Web App
-          apiKey: "YOUR_API_KEY",
-          authDomain: "YOUR_AUTH_DOMAIN",
-          projectId: "YOUR_PROJECT_ID",
-          storageBucket: "YOUR_STORAGE_BUCKET",
-          messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
-          appId: "YOUR_APP_ID",
-        };
+    <script type="module">
+      // Import the functions you need from the SDKs you need
+      import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+      import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-analytics.js";
+      // TODO: Add SDKs for Firebase products that you want to use
+      // https://firebase.google.com/docs/web/setup#available-libraries
 
-        // Initialize Firebase
-        firebase.initializeApp(firebaseConfig);
-      });
+      // Import Firebase configuration from external file
+      import firebaseConfig from "./firebase_config.js";
+
+      // Initialize Firebase
+      const app = initializeApp(firebaseConfig);
+      const analytics = getAnalytics(app);
     </script>
 
     <script src="flutter_bootstrap.js" async></script>

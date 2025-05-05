@@ -56,7 +56,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     decoration: InputDecoration(
                       labelText: 'Email',
                       filled: true,
-                      fillColor: Colors.white.withOpacity(0.1),
+                      fillColor: Colors.white.withAlpha(25),
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(12),
                       ),
@@ -76,7 +76,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     decoration: InputDecoration(
                       labelText: 'Password',
                       filled: true,
-                      fillColor: Colors.white.withOpacity(0.1),
+                      fillColor: Colors.white.withAlpha(25),
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(12),
                       ),
@@ -96,15 +96,18 @@ class _LoginScreenState extends State<LoginScreen> {
                     onPressed: () async {
                       if (_formKey.currentState!.validate()) {
                         try {
+                          final navigator = Navigator.of(context);
+                          ScaffoldMessenger.of(context);
                           await context.read<AuthProvider>().signIn(
-                                _emailController.text.trim(),
-                                _passwordController.text,
-                              );
+                            _emailController.text.trim(),
+                            _passwordController.text,
+                          );
                           if (mounted) {
-                            Navigator.pushReplacementNamed(context, '/home');
+                            navigator.pushReplacementNamed('/home');
                           }
                         } catch (e) {
                           if (mounted) {
+                            if (!mounted) return;
                             ScaffoldMessenger.of(context).showSnackBar(
                               SnackBar(content: Text(e.toString())),
                             );

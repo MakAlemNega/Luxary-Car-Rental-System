@@ -1,15 +1,17 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:logging/logging.dart';
 import '../models/car_model.dart';
 
 class CarService {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+  final _logger = Logger('CarService');
 
   Future<List<Car>> getCars() async {
     try {
       final QuerySnapshot snapshot = await _firestore.collection('cars').get();
       return snapshot.docs.map((doc) => Car.fromFirestore(doc)).toList();
     } catch (e) {
-      print('Error fetching cars: $e');
+      _logger.severe('Error fetching cars', e);
       return [];
     }
   }
@@ -39,7 +41,7 @@ class CarService {
       final QuerySnapshot snapshot = await query.get();
       return snapshot.docs.map((doc) => Car.fromFirestore(doc)).toList();
     } catch (e) {
-      print('Error searching cars: $e');
+      _logger.severe('Error searching cars', e);
       return [];
     }
   }
@@ -53,7 +55,7 @@ class CarService {
       }
       return null;
     } catch (e) {
-      print('Error fetching car by id: $e');
+      _logger.severe('Error fetching car by id: $id', e);
       return null;
     }
   }
