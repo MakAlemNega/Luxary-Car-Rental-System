@@ -1,15 +1,16 @@
 import 'package:firebase_core/firebase_core.dart';
+import 'config/env_config.dart';
 
 class DefaultFirebaseOptions {
   static FirebaseOptions get currentPlatform {
-    return const FirebaseOptions(
-      apiKey: "AIzaSyAP4QrQkW99fJv65D7bu-rX4WzTYw4s0hk",
-      authDomain: "luxury-car-rental-b03f7.firebaseapp.com",
-      projectId: "luxury-car-rental-b03f7",
-      storageBucket: "luxury-car-rental-b03f7.firebasestorage.app",
-      messagingSenderId: "868171826615",
-      appId: "1:868171826615:web:4b5a76d4f3e8a4e45c9432",
-      measurementId: "G-QYSV89CMNB",
+    return FirebaseOptions(
+      apiKey: EnvConfig.firebaseApiKey,
+      authDomain: EnvConfig.firebaseAuthDomain,
+      projectId: EnvConfig.firebaseProjectId,
+      storageBucket: EnvConfig.firebaseStorageBucket,
+      messagingSenderId: EnvConfig.firebaseMessagingSenderId,
+      appId: EnvConfig.firebaseAppId,
+      measurementId: EnvConfig.firebaseMeasurementId,
     );
   }
 }

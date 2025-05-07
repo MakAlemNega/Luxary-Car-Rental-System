@@ -3,6 +3,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
 import 'package:provider/provider.dart';
 import 'package:logging/logging.dart';
+import 'config/env_config.dart';
 import 'features/auth/data/providers/auth_provider.dart';
 import 'features/car/data/providers/car_provider.dart';
 import 'features/auth/presentation/screens/login_screen.dart';
@@ -12,6 +13,15 @@ import 'features/car/presentation/screens/car_listing_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
+  // Load environment variables
+  try {
+    await EnvConfig.load();
+    debugPrint('Environment variables loaded successfully');
+  } catch (e) {
+    debugPrint('Failed to load environment variables: $e');
+    return;
+  }
 
   // Initialize logging configuration
   Logger.root.level = Level.ALL;
@@ -29,10 +39,12 @@ void main() async {
     await Firebase.initializeApp(
       options: DefaultFirebaseOptions.currentPlatform,
     );
+    debugPrint('Firebase initialized successfully');
   } catch (e) {
     debugPrint('Failed to initialize Firebase: $e');
     return;
   }
+
   runApp(const LuxuryCarRentalApp());
 }
 
